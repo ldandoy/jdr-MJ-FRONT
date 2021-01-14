@@ -6,3 +6,45 @@
 body {
   font-family: 'Arial', sans-serif;
 }
+
+.container {
+  padding-top: 60px;
+}
+
+.StartScreen {
+  height: 100vh;
+}
+
+.StartScreen .screen {
+  border: 1px dotted black;
+  margin-top: 10%;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, .75);
+  color: white;
+}
+
+.StartScreen .screen p, .StartScreen .screen h1, .StartScreen .screen h2 {
+  padding: 50px;
+}
+
+.SectionScreen .goto-list {
+  display: flex;
+  justify-content: space-around
+}
+
+.SectionScreen .image {
+  width: 75%;
+  border: 1px #C0C0C0 solid;
+  box-shadow: 10px 5px 5px #C0C0C0;
+}
+
+.SectionScreen .ligne {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.SectionScreen .description {
+  font-size: 1.5rem;
+}
