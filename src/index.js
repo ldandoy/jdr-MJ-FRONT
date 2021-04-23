@@ -13,12 +13,12 @@ import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter forceRefresh={true}>
       <NavbarSite />
-      <Route path="/" exact={true} component={AccueilScreen} />
+      <Route path="/" exact component={AccueilScreen} />
       <Route path="/senarios" component={SenariosScreen} />
       <Route path="/:senarioId/start" component={StartScreen} />
-      <Route path="/:senarioId/section/:sectionId" component={SectionScreen} />
+      <Route path="/:senarioId/section/:sectionId" render={props => <SectionScreen {...props} />} />
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

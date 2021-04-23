@@ -1,7 +1,92 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom';
+import { Modal, Button } from "react-bootstrap";
 
-class  SectionScreen extends React.Component {
+const SectionScreen = (props) => {
+    const [senarioId, setSenarioId] = useState(props.match.params.senarioId);
+    const [sectionId, setSectionId] = useState(props.match.params.sectionId);
+    const [senario, setSenario] = useState({});
+    const [currentSection, setCurrentSection] = useState({});
+    const [textResult, setTextResult] = useState('')
+    const [gotoResult, setGotoResult] = useState('')
+    const [gotoLabelResult, setGotoLabelResult] = useState('')
+    const [gotoTypeResult, setGotoTypeResult] = useState('')
+    
+    const history = useHistory()
+
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+
+    useEffect(() => {
+        fetch('https://mjvirtuelapi.herokuapp.com/api/senarios/'+senarioId)
+        .then(response => response.json())
+        .then((senario) => {
+            setSenario(senario);
+            setCurrentSection(senario.sections[sectionId])
+        })
+        .catch((error) => {
+            console.error(error)
+        });
+    },[senarioId, sectionId])
+
+    const handleAction = (action) => {
+        let res = Math.floor(Math.random() * 10)
+
+        if (res > action.success) {
+            setTextResult(action.textSuccess)
+            setGotoResult(action.gotoSuccess)
+            setGotoLabelResult(action.gotoLabelSuccess)
+            setGotoTypeResult('success')
+        } else {
+            setTextResult(action.textFailed)
+            setGotoResult(action.gotoFailed)
+            setGotoLabelResult(action.gotoLabelFailed)
+            setGotoTypeResult('danger')
+        }
+
+        setShow(true)
+    }
+
+    return <div className="container">
+        <div className="row">
+            <div className="SectionScreen col-12">
+                <div className="screen">
+                    <h1 className="text-center mt-4">{currentSection.title}</h1>
+                    <div className="ligne">
+                        <div className="text-center mt-4 mb-4">{ currentSection.picture && <img src={currentSection.picture} alt="this.state.currentSection.title" className="image" /> }</div>
+                        <div className="text-center mt-4 mb-4 description">{currentSection.description}</div>
+                    </div>
+                    <div className="mt-4 goto-list">{ Object.keys(currentSection).length !== 0 && currentSection.actions.map((action, index) => 
+                        {
+                            if (action.type === "goto" ) {
+                                return <div key={index}><Link to={"/" + senarioId + action.url} className="btn btn-info" refresh="true">{action.label}</Link></div>
+                            } else {
+                                return <div key={index}>
+                                    <button className="btn btn-info" onClick={(e) => handleAction(action)}>{action.label}</button>
+                                    <Modal show={show} onHide={handleClose}>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>{action.label}</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>
+                                            <p>{textResult}</p>
+                                        </Modal.Body>
+                                        <Modal.Footer>
+                                            <Button variant="secondary" onClick={handleClose}>Close</Button>
+                                            <Button variant={gotoTypeResult} onClick={(e) => history.push(`/${senarioId}${gotoResult}`)}>{gotoLabelResult}</Button>
+                                        </Modal.Footer>
+                                    </Modal>
+                                </div>
+                            }
+                        }
+                    )}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+/*class SectionScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,7 +102,7 @@ class  SectionScreen extends React.Component {
         .then(response => response.json())
         .then((senario) => {
             this.setState({ 'senario': senario });
-            this.setState({ 'currentSection': this.state.senario.section[this.state.sectionId] });
+            this.setState({ 'currentSection': this.state.senario.sections[this.state.sectionId] });
         })
         .catch((error) => {
             console.error(error)
@@ -25,13 +110,13 @@ class  SectionScreen extends React.Component {
     }
 
     render() {
-        let gotoList ;
+        let actionList ;
         if (Object.keys(this.state.currentSection).length !== 0) {
-            gotoList = this.state.currentSection.gotos.map((goto, index) =>
-                <div key={index}><Link to={"/" + this.state.senarioId + goto.url} className="btn btn-info">{goto.label}</Link></div>
+            actionList = this.state.currentSection.actions.map((action, index) => 
+                <div key={index}><Link to={"/" + this.state.senarioId + action.url} className="btn btn-info">{action.label}</Link></div>
             );
         } else {
-            gotoList = <></>
+            actionList = <></>
         }
 
         let picture = <></>;
@@ -49,12 +134,13 @@ class  SectionScreen extends React.Component {
                             <div className="text-center mt-4 mb-4">{ picture }</div>
                             <div className="text-center mt-4 mb-4 description">{this.state.currentSection.description}</div>
                         </div>
-                        <div className="mt-4 goto-list">{gotoList}</div>
+                        <div className="mt-4 goto-list">{actionList}</div>
                     </div>
                 </div>
             </div>
         </div>
     }
 }
+*/
 
 export default SectionScreen;
