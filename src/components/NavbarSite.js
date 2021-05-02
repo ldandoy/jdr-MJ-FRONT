@@ -12,6 +12,11 @@ class NavbarSite extends React.Component {
                     <Nav.Link as={Link} to="/">Accueil</Nav.Link>
                     <Nav.Link as={Link} to="/senarios">Sénarios</Nav.Link>
                 </Nav>
+
+                <Nav>
+                    <Nav.Link as={Link} to="/register">Inscription</Nav.Link>
+                    <Nav.Link as={Link} to="/login">Connection</Nav.Link>
+                </Nav>
             </Navbar.Collapse>
         </Navbar>
     }
