@@ -7,7 +7,7 @@ body {
   font-family: 'Arial', sans-serif;
 }
 
-.container {
+.container, .container-fluid {
   padding-top: 60px;
 }
 
@@ -47,4 +47,8 @@ body {
 
 .SectionScreen .description {
   font-size: 1.5rem;
+}
+
+.EditerScreen .form-group img {
+  width: 20%;
 }

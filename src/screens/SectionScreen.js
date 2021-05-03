@@ -17,7 +17,7 @@ class  SectionScreen extends React.Component {
         .then(response => response.json())
         .then((senario) => {
             this.setState({ 'senario': senario });
-            this.setState({ 'currentSection': this.state.senario.section[this.state.sectionId] });
+            this.setState({ 'currentSection': this.state.senario.sections[this.state.sectionId] });
         })
         .catch((error) => {
             console.error(error)
@@ -40,7 +40,7 @@ class  SectionScreen extends React.Component {
             picture = <img src={this.state.currentSection.picture} alt="this.state.currentSection.title" className="image" />
         }
 
-        return <div className="container">
+        return <div className="container-fluid">
             <div className="row">
                 <div className="SectionScreen col-12">
                     <div className="screen">

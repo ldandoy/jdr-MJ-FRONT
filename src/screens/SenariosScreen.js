@@ -41,6 +41,8 @@ class SenariosScreen extends React.Component {
         </Card.Body>
         <Card.Footer>
           <Link className="btn btn-success btn-sm" to={"/" + senario._id + "/start"}>Faire ce sénario</Link>
+          &nbsp;
+          <Link className="btn btn-info btn-sm" to={"/" + senario._id + "/edit"}>Editer ce sénario</Link>
         </Card.Footer>
       </Card>
     );
