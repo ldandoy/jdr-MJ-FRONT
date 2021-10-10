@@ -1,18 +1,22 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Default from './Layouts/Default'
 import Auth from './Layouts/Auth'
 
 import Home from './pages/Home'
-import MyAccount from './pages/MyAccount'
 import Login from './pages/Login'
 import Logout from './pages/Logout'
 import Register from './pages/Register'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
 import Active from './pages/Active'
+
+import MyAccount from './pages/account/Show'
+
+import Senarii from './pages/account/senarii/List'
+import SenariiEdit from './pages/account/senarii/Edit'
 
 import List from './pages/senarii/List'
 import Start from './pages/senarii/Start'
@@ -23,7 +27,6 @@ import Toast from './components/Toast/Toast'
 import { refreshToken } from './redux/actions/authActions'
 
 function App() {
-  const history = useHistory()
   const dispatch = useDispatch()
   const { auth } = useSelector((state) => state)
 
@@ -31,7 +34,7 @@ function App() {
     if(!auth || !auth.access_token || !auth.user) {
       dispatch(refreshToken())
     }
-  },[dispatch, auth, history])
+  }, [dispatch, auth])
 
   return (
     <Router forceRefresh={true}>
@@ -59,6 +62,16 @@ function App() {
         <Route exact path="/senarii/:senarii_id/sections/:sections_index">
           <Default isPrivate={true}>
             <Section />
+          </Default>
+        </Route>
+        <Route exact path="/account/senarii">
+          <Default>
+            <Senarii />
+          </Default>
+        </Route>
+        <Route exact path="/account/senarii/:senarii_id/edit">
+          <Default>
+            <SenariiEdit />
           </Default>
         </Route>
         <Route path="/login">

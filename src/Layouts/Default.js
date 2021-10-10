@@ -23,7 +23,7 @@ const Default = ({ children, isPrivate = false }) => {
         <main>
             { children }
         </main>
-        <footer className="txt-center mt-50 txt-size-11">
+        <footer className="txt-center mt-50 txt-size-11 ptb-50 txt-white-100 bg-white-1000">
             Tous droits réservés &copy; 2021 overconsulting.net
         </footer>
     </>)

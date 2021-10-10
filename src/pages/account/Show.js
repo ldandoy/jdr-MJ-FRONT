@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 
-import { updateUser, resetPassword } from '../redux/actions/profileAction'
+import { updateUser, resetPassword } from '../../redux/actions/profileAction'
 
-const MyAccount = () => {
+const Show = () => {
     const initState = {
         name: '',
         account: '',
@@ -97,4 +97,4 @@ const MyAccount = () => {
     </section>)
 }
 
-export default MyAccount
+export default Show

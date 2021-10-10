@@ -1,4 +1,4 @@
-import { getAPI } from '../../services/FetchData'
+import { getAPI, postAPI } from '../../services/FetchData'
 
 export const getList = (auth) => async (dispatch) => {
     try {
@@ -18,7 +18,7 @@ export const getList = (auth) => async (dispatch) => {
     }
 }
 
-export const getSenerio = (auth, senarii_id) => async(dispatch) => {
+export const getSenerio = (auth, senarii_id) => async (dispatch) => {
     if(!auth.access_token || !auth.user) return;
 
     try {
@@ -28,6 +28,18 @@ export const getSenerio = (auth, senarii_id) => async(dispatch) => {
             type: 'SET_SENARIO',
             payload: res.data
         })
+    } catch (err) {
+        dispatch({ type: 'TOAST_ADD', payload: {errors: err.response.data.msg}})
+    }
+}
+
+export const updateSenario = (auth, senario, history) => async (dispatch) => {
+    if(!auth.access_token || !auth.user) return;
+
+    try {
+        await postAPI(`senarii/${senario._id}`, senario, auth.access_token)
+
+        history.push(`/account/senarii/${senario._id}/edit`)
     } catch (err) {
         dispatch({ type: 'TOAST_ADD', payload: {errors: err.response.data.msg}})
     }

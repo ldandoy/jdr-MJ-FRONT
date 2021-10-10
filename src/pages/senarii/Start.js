@@ -17,13 +17,24 @@ const Start = () => {
         { senario &&
             <section> 
                 <div className="container">
-                    <h1 className="title-page">Bienvenu sur le sénario</h1>
+                    <h1 className="title-page">{ senario.title }</h1>
                 </div>
+                
                 <div className="container mt-30">
-                    <img src={senario.picture} alt={ senario.title } className="" width={500} />
-                    <h2 className="text-center">{ senario.title }</h2>
-                    <div className="text-center">{ senario.description }</div>
-                    <div className="text-center"><Link to={`/senarii/${senario._id}/sections/0`} className="btn btn-success">Lancer le sénario</Link></div>
+                    <div className="grid grid-cols-2 gap-8">
+                        <div>
+                            <img src={senario.picture} alt={ senario.title } className="img-fluid" />
+                        </div>
+                        <div>
+                            <div className="text-center">{ senario.description }</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="container mt-30 flex flex-jc-space-around">
+                    <div className="text-center">
+                        <Link to={`/senarii/${senario._id}/sections/0`} className="btn btn-success">Commencer le sénario</Link>
+                    </div>
                 </div>
             </section>
         }
