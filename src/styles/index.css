@@ -1,3 +1,18 @@
 .btn {
     display: inline-block;
 }
+
+.bg-green {
+    background: #3B4B28 !important;
+}
+
+.txt-green {
+    color: #3B4B28 !important;
+}
+
+.title {
+    color: #3B4B28 !important;
+    font-size: 3rem;
+    text-align: center;
+    margin: 0 auto 80px;
+}

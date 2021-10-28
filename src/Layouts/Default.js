@@ -23,8 +23,9 @@ const Default = ({ children, isPrivate = false }) => {
         <main>
             { children }
         </main>
-        <footer className="txt-center mt-50 txt-size-11 ptb-50 txt-white-100 bg-white-1000">
-            Tous droits réservés &copy; 2021 overconsulting.net
+        <footer className="txt-center mt-50 txt-size-11 ptb-50 bg-gray-200">
+            <div>Tous droits réservés &copy; 2021 <a href='https://overconsulting.net' rel="noreferrer" className="txt-green" target="_blank">overconsulting.net</a></div>
+            <div>Image de <a href='https://www.aidedd.org/' rel="noreferrer" className="txt-green" target="_blank">aidedd</a></div>
         </footer>
     </>)
 }

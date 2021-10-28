@@ -10,7 +10,7 @@ const Navbar =  () => {
     }
 
     return (
-        <nav className="navbar navbar-v navbar-bordered-b sticky-top bg-light">
+        <nav className="navbar navbar-v navbar-bordered-b navbar-dark sticky-top bg-green">
             <div className="navbar-title">
                 <a id="home" href="/" className="navbar-link">MJ Virtuel</a>
                 <i className="navbar-menu-icon">&#9776;</i>
