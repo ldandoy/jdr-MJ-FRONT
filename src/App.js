@@ -17,6 +17,7 @@ import MyAccount from './pages/account/Show'
 
 import Senarii from './pages/account/senarii/List'
 import SenariiEdit from './pages/account/senarii/Edit'
+import SenariiNew from './pages/account/senarii/New'
 
 import List from './pages/senarii/List'
 import Start from './pages/senarii/Start'
@@ -49,28 +50,33 @@ function App() {
             <MyAccount />
           </Default>
         </Route>
-        <Route exact path="/senarii">
+        <Route exact path="/scenarii">
           <Default>
             <List />
           </Default>
         </Route>
-        <Route exact path="/senarii/:senarii_id">
+        <Route exact path="/scenarii/:senarii_id">
           <Default>
             <Start />
           </Default>
         </Route>
-        <Route exact path="/senarii/:senarii_id/sections/:sections_index">
+        <Route exact path="/scenarii/:senarii_id/sections/:sections_index">
           <Default isPrivate={true}>
             <Section />
           </Default>
         </Route>
-        <Route exact path="/account/senarii">
-          <Default>
+        <Route exact path="/account/scenarii/new">
+          <Default isPrivate={true}>
+            <SenariiNew />
+          </Default>
+        </Route>
+        <Route exact path="/account/scenarii">
+          <Default isPrivate={true}>
             <Senarii />
           </Default>
         </Route>
-        <Route exact path="/account/senarii/:senarii_id/edit">
-          <Default>
+        <Route exact path="/account/scenarii/:senarii_id/edit">
+          <Default isPrivate={true}>
             <SenariiEdit />
           </Default>
         </Route>

@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
+import { useSelector } from "react-redux"
 import { Link } from 'react-router-dom'
 
 import { getAPI } from '../../services/FetchData'
 
 const List = () => {
     const [senarii, setSenarii] = useState([])
+    const { auth } = useSelector((state) => state)
 
     const getVisibleSenarii = async () => {
         let data = await getAPI(`senarii/visible`)
@@ -14,10 +16,10 @@ const List = () => {
 
     useEffect(() => {
         getVisibleSenarii()
-    }, [])
+    }, [auth])
 
     return (<>
-        <img src="ban.png" alt="banniere du site" />
+        <img src="ban.png" className="img-fluid" alt="banniere du site" />
         <section className="mtb-80">
             <div className="container">
                 <h1 className="title">Listes des sénarii</h1>
@@ -29,10 +31,12 @@ const List = () => {
                             <div className="card-image">
                                 <img src={senario.picture} alt={senario.title} className="" />
                             </div>
-                            <div className="card-title">{senario.status === "Béta" && <span class="badge bg-warning">Béta</span>} {senario.title}</div>
+                            <div className="card-title">{senario.status === "Béta" && <span className="badge bg-warning">Béta</span>} {senario.title}</div>
                             <div className="card-body">{senario.description}</div>
                             <div className="card-footer txt-right">
-                                <Link to={`/senarii/${senario._id}`}><button className="btn btn-success">Faire ce sénario</button></Link>
+                                <Link to={`/scenarii/${senario._id}`}>
+                                    <button className="btn btn-green">Choisir ce scénario</button>
+                                </Link>
                             </div>
                         </div>
                     )}

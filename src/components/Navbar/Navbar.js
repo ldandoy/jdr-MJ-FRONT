@@ -18,7 +18,7 @@ const Navbar =  () => {
 
             <div className="navbar-content-menu">
                 <ul className="navbar-menu-left">
-                    <li className="navbar-item"><Link to="/senarii" className="navbar-link">Sénarii</Link></li>
+                    <li className="navbar-item"><Link to="/scenarii" className="navbar-link">Scénarii</Link></li>
                 </ul>
                 <ul className="navbar-menu-right">
                     {
@@ -30,16 +30,16 @@ const Navbar =  () => {
                     {
                         auth.user && <>
                             <li className="navbar-item dropdown">
-                                <Link className="navbar-link" to="/my-account">{auth.user.name}</Link>
-                                <ul className="navbar-ss-menu bg-white-100">
+                                <Link className="navbar-link" to="#">{auth.user.name}</Link>
+                                <ul className="navbar-ss-menu bg-green">
                                     <li className="navbar-item">
-                                        <Link to="/my-account" className={ `navbar-link ${isActive('/my-account')}` }>{auth.user.name}</Link>
+                                        <Link to="/my-account" className={ `navbar-link ${isActive('/my-account')}` }>Mon compte</Link>
                                     </li>
                                     <li className="navbar-item">
-                                        <Link to="/account/senarii" className={ `navbar-link ${isActive('/account/senarii')}` }>Vos sénarii</Link>
+                                        <Link to="/account/scenarii" className={ `navbar-link ${isActive('/account/scenarii')}` }>Vos scénarii</Link>
                                     </li>
                                     <li className="navbar-item">
-                                        <Link to="/logout" className="navbar-link">Logout</Link>
+                                        <Link to="/logout" className="navbar-link txt-red-1000">Logout</Link>
                                     </li>
                                 </ul>
                             </li>

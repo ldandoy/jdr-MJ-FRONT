@@ -1,26 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
-import { useParams, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
-import {updateSenario} from '../../../redux/actions/senarriActions'
+import {insertSenario} from '../../../redux/actions/senarriActions'
 
-const Edit = () => {
+const New = () => {
     const { auth } = useSelector((state) => state)
-    const [ senario, setSenario ] = useState(null)
-    const { senarii_id } = useParams()
+    const [ senario, setSenario ] = useState({
+        title: '',
+        status: '',
+        description: '',
+        universe: '',
+        nbPersonne: '',
+        duration: '',
+        picture: '',
+        sections: []
+    })
     let history = useHistory()
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        if (!auth || !auth.user || !auth.user.senarii) return
-        
-        let senarioFiltered = auth.user.senarii.filter(function (el) {
-            return el._id === senarii_id
-        })
-
-        setSenario(senarioFiltered[0])
-
-    }, [auth, senarii_id])
 
     const onChangeInputHandler = (e) => {
         const {name, value} = e.target
@@ -98,7 +95,7 @@ const Edit = () => {
 
     const onSubmitHandler = (e) => {
         e.preventDefault()
-        dispatch(updateSenario(auth, senario, history))
+        dispatch(insertSenario(auth, senario, history))
     }
 
     return (<>
@@ -106,7 +103,7 @@ const Edit = () => {
         <section>
             { senario && <>
                 <div className="container mt-50">
-                    <h1 className="title">Editer le scénario: {senario.title}</h1>
+                    <h1 className="title">Créer un nouveau scénario</h1>
                 </div>
                 <div className="container mt-30">
                     <form className="form-no-bordered" onSubmit={onSubmitHandler}>
@@ -297,7 +294,7 @@ const Edit = () => {
                         <div>
                             <div className="form-group">
                                 <button className="btn bg-green txt-white-100 w-100 p-20">
-                                    Mettre à jour
+                                    Créer le sénario
                                 </button>
                             </div>
                         </div>
@@ -308,4 +305,4 @@ const Edit = () => {
     </>)
 }
 
-export default Edit
+export default New

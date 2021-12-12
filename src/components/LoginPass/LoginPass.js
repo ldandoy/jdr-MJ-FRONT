@@ -23,11 +23,11 @@ const LoginPass =  () => {
     return (
         <form className="form-no-bordered" onSubmit={onSubmitHandler}>
             <div className="form-group">
-                <label htmlFor="" className="form-label">Identifiant</label>
+                <label htmlFor="" className="form-label txt-green">Identifiant</label>
                 <input type="text" name="account" value={account} className="form-input" onChange={onChangeInputHandler} placeholder="Entrez votre email" />
             </div>
             <div className="form-group">
-                <label htmlFor="" className="form-label">Mot de passe</label>
+                <label htmlFor="" className="form-label txt-green">Mot de passe</label>
                 <div className="form-input-group">
                     <input type={typePass ? "text" : "password" } name="password" value={password} className="form-input" onChange={onChangeInputHandler} placeholder="Mot de passe" />
                     <small onClick={() => setTypePass(!typePass)}>
@@ -36,7 +36,7 @@ const LoginPass =  () => {
                 </div>
             </div>
             <div className="form-group">
-                <button className="btn bg-purple-600 txt-white-100 hover:bg-purple-900 w-100 p-20"
+                <button className="btn bg-green txt-white-100 w-100 p-20"
                 disabled={(account && password) ? false : true}
                 >
                     Connexion

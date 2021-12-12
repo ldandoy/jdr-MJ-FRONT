@@ -15,8 +15,8 @@ const Login = () => {
         if (auth.access_token) history.push('/')
     }, [auth.access_token, history])
 
-    return (<>
-        <div className="card-title txt-center txt-gray-900">
+    return (<div className="card bg-white">
+        <div className="card-title txt-center txt-green">
             <h1>Connexion au service</h1>
         </div>
         <div className="card-body">
@@ -27,12 +27,12 @@ const Login = () => {
                     <GoogleAuthButton />
                 </div>
                 <div className="w-50">
-                    <p><Link to={`/register`} className="txt-size-14 txt-gray-800">Pas encore de compte ?</Link></p>
-                    <p><Link to={`/forgot_password`} className="txt-size-14 txt-gray-800">Mot de passe oublié ?</Link></p>
+                    <p><Link to={`/register`} className="txt-size-14 txt-green">Pas encore de compte ?</Link></p>
+                    <p><Link to={`/forgot_password`} className="txt-size-14 txt-green">Mot de passe oublié ?</Link></p>
                 </div>
             </div>
         </div>
-    </>)
+    </div>)
 }
 
 export default Login

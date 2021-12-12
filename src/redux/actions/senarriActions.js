@@ -1,4 +1,4 @@
-import { getAPI, postAPI } from '../../services/FetchData'
+import { getAPI, postAPI, putAPI, deleteAPI } from '../../services/FetchData'
 
 export const getList = (auth) => async (dispatch) => {
     try {
@@ -37,9 +37,33 @@ export const updateSenario = (auth, senario, history) => async (dispatch) => {
     if(!auth.access_token || !auth.user) return;
 
     try {
-        await postAPI(`senarii/${senario._id}`, senario, auth.access_token)
+        await putAPI(`senarii/${senario._id}`, senario, auth.access_token)
 
         history.push(`/account/senarii/${senario._id}/edit`)
+    } catch (err) {
+        dispatch({ type: 'TOAST_ADD', payload: {errors: err.response.data.msg}})
+    }
+}
+
+export const insertSenario = (auth, senario, history) => async (dispatch) => {
+    if(!auth.access_token || !auth.user) return;
+
+    try {
+        await postAPI(`senarii/new`, senario, auth.access_token)
+
+        history.push(`/account/senarii`)
+    } catch (err) {
+        dispatch({ type: 'TOAST_ADD', payload: {errors: err.response.data.msg}})
+    }
+}
+
+export const deleteSenario = (auth, senarioId, history) => async (dispatch) => {
+    if(!auth.access_token || !auth.user) return;
+
+    try {
+        await deleteAPI(`senarii/${senarioId}`, auth.access_token)
+
+        history.push(`/account/senarii`)
     } catch (err) {
         dispatch({ type: 'TOAST_ADD', payload: {errors: err.response.data.msg}})
     }

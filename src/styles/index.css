@@ -1,3 +1,7 @@
+html, body, #root {
+    height: 100vh;
+}
+
 .btn {
     display: inline-block;
 }
@@ -6,7 +10,11 @@
     background: #3B4B28 !important;
 }
 
-.txt-green {
+.bg-beige {
+    background: #CEC293;
+}
+
+.txt-green, .form-label {
     color: #3B4B28 !important;
 }
 
@@ -15,4 +23,20 @@
     font-size: 3rem;
     text-align: center;
     margin: 0 auto 80px;
+}
+
+.btn-green {
+    background: #3B4B28;
+    color: white;
+}
+
+.btn-beige {
+    background: #CEC293;
+    color: #816D42;
+}
+
+.senario_description {
+    text-align: justify;
+    font-size: 1.4rem;
+    line-height: 1.7rem;
 }

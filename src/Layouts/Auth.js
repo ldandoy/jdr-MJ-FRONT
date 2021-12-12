@@ -1,8 +1,10 @@
+import styles from "../styles/Auth.module.css"
+
 const Auth = ({ children }) => {
-    return (<div className="page pageAuth">
+    return (<div className={styles.pageAuth}>
         <main>
             <section className="pt-20">
-                <div className="card w-50 mx-auto bg-light">
+                <div className="card w-50 mx-auto">
                     { children }
                 </div>
             </section>
