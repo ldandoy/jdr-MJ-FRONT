@@ -11,8 +11,9 @@ const Logout =  () => {
 
     const { signOut } = useGoogleLogout({
         clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-        onFailure: (response) => { console.log(response) },
+        onFailure: (response) => { console.log("Error while logout: ", response) },
         onLogoutSuccess: (response) => {
+            console.log("Logout successed !")
             history.push("/login")
         }
     })
