@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const postAPI = async (url, post, token) => {
-    const res = await axios.post(`/api/${url}`, post, {
+    const res = await axios.post(`${process.env.REACT_APP_URL_API}/api/${url}`, post, {
         headers: { Authorization: token }
     })
 
@@ -9,7 +9,7 @@ export const postAPI = async (url, post, token) => {
 }
 
 export const getAPI = async (url, token) => {
-    const res = await axios.get(`/api/${url}`, {
+    const res = await axios.get(`${process.env.REACT_APP_URL_API}/api/${url}`, {
         headers: { Authorization: token }
     })
 
@@ -17,7 +17,7 @@ export const getAPI = async (url, token) => {
 }
 
 export const patchAPI = async (url, post, token) => {
-    const res = await axios.patch(`/api/${url}`, post, {
+    const res = await axios.patch(`${process.env.REACT_APP_URL_API}/api/${url}`, post, {
         headers: { Authorization: token }
     })
 
@@ -25,7 +25,7 @@ export const patchAPI = async (url, post, token) => {
 }
 
 export const putAPI = async (url, post, token) => {
-    const res = await axios.put(`/api/${url}`, post, {
+    const res = await axios.put(`${process.env.REACT_APP_URL_API}/api/${url}`, post, {
         headers: { Authorization: token }
     })
 
@@ -33,7 +33,7 @@ export const putAPI = async (url, post, token) => {
 }
 
 export const postImage = async (url, form, token) => {
-    const res = await axios.post(`/api/${url}`, form, {
+    const res = await axios.post(`${process.env.REACT_APP_URL_API}/api/${url}`, form, {
         headers: {
             Authorization: token
         }
@@ -43,7 +43,7 @@ export const postImage = async (url, form, token) => {
 }
 
 export const deleteAPI = async (url, token) => {
-    const res = await axios.delete(`/api/${url}`, {
+    const res = await axios.delete(`${process.env.REACT_APP_URL_API}/api/${url}`, {
         headers: { Authorization: token }
     })
 
