@@ -5,13 +5,13 @@ import { useDispatch } from 'react-redux'
 import { googleLogin } from '../../redux/actions/authActions'
 
 const GoogleAuthButton =  () => {
-    let history = useHistory();
+    let history = useHistory()
     const dispatch = useDispatch()
 
     const onSuccessHandler = async (response) => {
         const id_token = response.tokenId
         await dispatch(googleLogin(id_token))
-        history.push("/my-account");
+        history.push("/my-account")
     }
 
     const onFailureHandler = (response) => {

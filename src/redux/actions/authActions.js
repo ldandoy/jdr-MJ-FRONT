@@ -8,7 +8,6 @@ export const login = (userLogin) => async (dispatch) => {
 
         dispatch({ type: "ALERT", payload: { success: res.data.msg } })
 
-        localStorage.setItem('logged', true)
     } catch (error) {
         dispatch({ type: 'ALERT', payload: { errors: error.response.data.msg }})
     }
@@ -41,7 +40,7 @@ export const refreshToken = () => async (dispatch) => {
         const res = await getAPI("refresh_token")
         dispatch({ type: 'AUTH', payload: res.data })
     } catch (error) {
-        // dispatch({type: 'TOAST_ADD', payload: { errors: error.response.data.msg }})
+        dispatch({type: 'TOAST_ADD', payload: { errors: error.response.data.msg }})
     }
 }
 
@@ -57,11 +56,10 @@ export const logout = () => async (dispatch) => {
 export const googleLogin = (id_token) => async (dispatch) => {
     try {
         const res = await postAPI('google_login', { id_token })
-    
+
         dispatch({ type: 'AUTH', payload: res.data })
 
         dispatch({ type: 'TOAST_ADD', payload: { success: res.data.msg } })
-        localStorage.setItem('logged', true)
     } catch (error) {
         dispatch({type: 'TOAST_ADD', payload: { errors: error.response.data.msg } })
     }

@@ -1,7 +1,12 @@
 import axios from 'axios'
 
+const ax = axios.create({
+    baseURL: process.env.REACT_APP_URL_API,
+    withCredentials: true,
+  });
+
 export const postAPI = async (url, post, token) => {
-    const res = await axios.post(`${process.env.REACT_APP_URL_API}/api/${url}`, post, {
+    const res = await ax.post(`/api/${url}`, post, {
         headers: { Authorization: token }
     })
 
@@ -9,7 +14,7 @@ export const postAPI = async (url, post, token) => {
 }
 
 export const getAPI = async (url, token) => {
-    const res = await axios.get(`${process.env.REACT_APP_URL_API}/api/${url}`, {
+    const res = await ax.get(`/api/${url}`, {
         headers: { Authorization: token }
     })
 
@@ -17,7 +22,7 @@ export const getAPI = async (url, token) => {
 }
 
 export const patchAPI = async (url, post, token) => {
-    const res = await axios.patch(`${process.env.REACT_APP_URL_API}/api/${url}`, post, {
+    const res = await ax.patch(`/api/${url}`, post, {
         headers: { Authorization: token }
     })
 
@@ -25,7 +30,7 @@ export const patchAPI = async (url, post, token) => {
 }
 
 export const putAPI = async (url, post, token) => {
-    const res = await axios.put(`${process.env.REACT_APP_URL_API}/api/${url}`, post, {
+    const res = await ax.put(`/api/${url}`, post, {
         headers: { Authorization: token }
     })
 
@@ -33,17 +38,15 @@ export const putAPI = async (url, post, token) => {
 }
 
 export const postImage = async (url, form, token) => {
-    const res = await axios.post(`${process.env.REACT_APP_URL_API}/api/${url}`, form, {
-        headers: {
-            Authorization: token
-        }
+    const res = await ax.post(`/api/${url}`, form, {
+        headers: { Authorization: token }
     })
 
     return res
 }
 
 export const deleteAPI = async (url, token) => {
-    const res = await axios.delete(`${process.env.REACT_APP_URL_API}/api/${url}`, {
+    const res = await ax.delete(`/api/${url}`, {
         headers: { Authorization: token }
     })
 

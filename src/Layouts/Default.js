@@ -1,29 +1,21 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from "react-redux"
-import { useHistory } from 'react-router-dom'
 
 import Navbar from '../components/Navbar/Navbar'
 import "../styles/Default.module.css"
 
 const Default = ({ children, isPrivate = false }) => {
     const { auth } = useSelector((state) => state)
-    const history = useHistory()
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         if (isPrivate) {
             if (!auth) return
-
-            const logged = localStorage.getItem('logged')
-            if (logged !== 'true') {
-                history.push('/login')
-            } else {
-                setIsLoading(false)
-            }
+            setIsLoading(false)
         } else {
             setIsLoading(false)
         }
-    }, [isPrivate, history, auth, isLoading])
+    }, [isPrivate, auth, setIsLoading])
 
     return (<>
         <header>

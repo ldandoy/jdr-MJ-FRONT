@@ -32,7 +32,7 @@ function App() {
   const { auth } = useSelector((state) => state)
 
   useEffect(() => {
-    if(!auth || !auth.access_token || !auth.user) {
+    if(!auth || !auth.access_token) {
       dispatch(refreshToken())
     }
   }, [dispatch, auth])
@@ -50,19 +50,19 @@ function App() {
             <MyAccount />
           </Default>
         </Route>
-        <Route exact path="/scenarii">
-          <Default>
-            <List />
+        <Route exact path="/scenarii/:scenarii_id/sections/:sections_index">
+          <Default isPrivate={true}>
+            <Section />
           </Default>
         </Route>
-        <Route exact path="/scenarii/:senarii_id">
+        <Route exact path="/scenarii/:scenarii_id">
           <Default>
             <Start />
           </Default>
         </Route>
-        <Route exact path="/scenarii/:senarii_id/sections/:sections_index">
-          <Default isPrivate={true}>
-            <Section />
+        <Route exact path="/scenarii">
+          <Default>
+            <List />
           </Default>
         </Route>
         <Route exact path="/account/scenarii/new">

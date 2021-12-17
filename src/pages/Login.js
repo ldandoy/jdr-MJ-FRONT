@@ -13,9 +13,9 @@ const Login = () => {
 
     useEffect(() => {
         if (auth.access_token) history.push('/')
-    }, [auth.access_token, history])
+    }, [auth, history])
 
-    return (<div className="card bg-white">
+    return (<div className="card w-50 mx-auto bg-white">
         <div className="card-title txt-center txt-green">
             <h1>Connexion au service</h1>
         </div>

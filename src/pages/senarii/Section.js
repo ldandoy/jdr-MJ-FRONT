@@ -8,14 +8,14 @@ const Section = () => {
     const history = useHistory()
     const { auth, senario } = useSelector((state) => state)
     const dispatch = useDispatch()
-    const { senarii_id, sections_index } = useParams()
+    const { scenarii_id, sections_index } = useParams()
     const [section, setSection] = useState(null)
     const [action, setAction] = useState(null)
     const [done, setDone] = useState(null)
 
     useEffect(() => {
-        dispatch(getSenerio(auth, senarii_id))
-    }, [dispatch, auth, senarii_id])
+        dispatch(getSenerio(auth, scenarii_id))
+    }, [dispatch, auth, scenarii_id])
 
     useEffect(() => {
         if (!senario) return
@@ -91,7 +91,7 @@ const Section = () => {
                                     {action.textSuccess}
                                 </div>
                                 <div className="flex mt-20">
-                                    <Link to={`/senarii/${senarii_id}${action.gotoSuccess}`} className="btn btn-green">{action.gotoLabelSuccess}</Link>
+                                    <Link to={`/scenarii/${scenarii_id}${action.gotoSuccess}`} className="btn btn-green">{action.gotoLabelSuccess}</Link>
                                 </div>
                             </>}
 
@@ -100,7 +100,7 @@ const Section = () => {
                                     {action.textFailed}
                                 </div>
                                 { action.type !== "combat" && <div className="flex mt-20">
-                                    <Link to={`/senarii/${senarii_id}${action.gotoFailed}`} className="btn btn-error">{action.gotoLabelFailed}</Link>
+                                    <Link to={`/scenarii/${scenarii_id}${action.gotoFailed}`} className="btn btn-error">{action.gotoLabelFailed}</Link>
                                 </div> }
                             </>}
                         </div>
@@ -110,7 +110,7 @@ const Section = () => {
                     { action === null &&
                         section.actions.map((action, indexAction) => <div key={indexAction}>
                             { action.type === "goto" && 
-                                <Link to={`/senarii/${senarii_id}${action.url}`} className="btn btn-green" refresh="true">{action.label}</Link>
+                                <Link to={`/scenarii/${scenarii_id}${action.url}`} className="btn btn-green" refresh="true">{action.label}</Link>
                             }
 
                             { ((action.type === "testCompetence") || (action.type === "combat")) &&

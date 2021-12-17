@@ -7,11 +7,11 @@ import { getSenerio } from '../../redux/actions/senarriActions'
 const Start = () => {
     const { auth, senario } = useSelector((state) => state)
     const dispatch = useDispatch()
-    const { senarii_id } = useParams()
+    const { scenarii_id } = useParams()
 
     useEffect(() => {
-        dispatch(getSenerio(auth, senarii_id))
-    }, [dispatch, auth, senarii_id])
+        dispatch(getSenerio(auth, scenarii_id))
+    }, [dispatch, auth, scenarii_id])
 
     return (<>
         <img src="/ban.png" className="img-fluid" alt="banniere du site" />
@@ -34,7 +34,7 @@ const Start = () => {
 
                 <div className="container mt-30 flex flex-jc-space-around">
                     <div className="text-center">
-                        <Link to={`/senarii/${senario._id}/sections/0`} className="btn btn-green">Commencer le sénario</Link>
+                        <Link to={`/scenarii/${senario._id}/sections/0`} className="btn btn-green">Commencer le sénario</Link>
                     </div>
                 </div>
             </section>

@@ -4,9 +4,7 @@ const Auth = ({ children }) => {
     return (<div className={styles.pageAuth}>
         <main>
             <section className="pt-20">
-                <div className="card w-50 mx-auto">
-                    { children }
-                </div>
+                { children }
             </section>
         </main>
     </div>)

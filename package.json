@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "main": "public/electron.js",
-  "proxy": "http://localhost:3600",
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.0",
     "@testing-library/jest-dom": "^5.11.4",
