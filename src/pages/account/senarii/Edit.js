@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { useParams, useHistory } from 'react-router-dom'
 
-import {updateSenario} from '../../../redux/actions/senarriActions'
+import { refreshToken } from '../../../redux/actions/authActions'
+import { updateSenario } from '../../../redux/actions/senarriActions'
 
 const Edit = () => {
     const { auth } = useSelector((state) => state)
@@ -98,6 +99,7 @@ const Edit = () => {
 
     const onSubmitHandler = (e) => {
         e.preventDefault()
+        dispatch(refreshToken())
         dispatch(updateSenario(auth, senario, history))
     }
 

@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux"
 
 import { updateUser, resetPassword } from '../../redux/actions/profileAction'
+import { deleteSenario } from '../../redux/actions/senarriActions'
 
 const Show = () => {
     const initState = {
@@ -14,6 +16,7 @@ const Show = () => {
 
     const { auth } = useSelector((state) => state)
     const dispatch = useDispatch()
+    let history = useHistory()
 
     const [user, setUser] = useState(initState)
     const [typePass, setTypePass] = useState(false)
@@ -46,14 +49,26 @@ const Show = () => {
         }
     }
 
+    const deleteSenarii = (e, senarioId) => {
+        e.preventDefault()
+
+        dispatch(deleteSenario(auth, senarioId, history))
+    }
+
     const { name, account, avatar, password, cf_password } = user
 
     return (<>
         <img src="ban.png" className="img-fluid" alt="banniere du site" />
+        
         <section>
             <div className="container mt-100">
                 <h1 class="title">Mon compte</h1>
-                { auth.user ? <form onSubmit={onSubmitHandle}>
+            </div>
+        </section>
+
+        <section>
+            <div className="container">
+                { auth.user && <form onSubmit={onSubmitHandle}>
                     <div className="row row-half">
                         <div className="col">
                             <div className="form-group">
@@ -103,9 +118,49 @@ const Show = () => {
                             </div>
                         </div>
                     </div>
-                </form>: <></>}
+                </form>}
             </div>
         </section>
+
+        <section>
+            <div className="container mt-100">
+                <h2 class="title">Vos scénarii</h2>
+            </div>
+        </section>
+
+        <section>
+            <div className="container mt-30">
+                <Link to={`/account/scenarii/new`}><button className="btn btn-green"><i className="fas fa-plus"></i> Créer un nouveau scénario</button></Link>
+            </div>
+        </section>
+
+        { auth.user ? <section>
+            <div className="container mt-30">
+                <div className="grid grid-cols-4 gap-8">
+                    { auth.user && auth.user.senarii.map((senario) =>
+                        <div key={senario._id} className="card">
+                            <div className="card-title">
+                                {(senario.status === "Brouillon" || senario.status === "") && <span className="badge bg-light">Brouillon</span>}
+                                {senario.status === "Béta" && <span className="badge bg-warning">Béta</span>}
+                                {senario.status === "Publié" && <span className="badge bg-green">Publié</span>}
+                                &nbsp;{senario.title}
+                            </div>
+                            <div className="card-body">{senario.description}</div>
+                            <div className="card-footer txt-right">
+                                <Link to={`/scenarii/${senario._id}`}><button className="btn btn-small btn-green"><i className="fas fa-eye"></i></button></Link>&nbsp;
+                                <Link to={`/account/scenarii/${senario._id}/edit`}><button className="btn btn-small btn-beige"><i className="fas fa-pencil-alt"></i></button></Link>&nbsp;
+                                <button onClick={(event) => { deleteSenarii(event, senario._id)}} className="btn btn-small btn-error"><i className="fas fa-trash-alt"></i></button>
+                            </div>
+                        </div>)
+                    }
+                </div>
+            </div>
+        </section>
+        : <section>
+            <div className="container mt-30">
+                Vous n'avez pas de scénario pour le moment
+            </div>
+        </section> }
     </>)
 }
 

@@ -39,7 +39,7 @@ export const updateSenario = (auth, senario, history) => async (dispatch) => {
     try {
         await putAPI(`senarii/${senario._id}`, senario, auth.access_token)
 
-        history.push(`/account/senarii/${senario._id}/edit`)
+        history.push(`/account/scenarii/${senario._id}/edit`)
     } catch (err) {
         dispatch({ type: 'TOAST_ADD', payload: {errors: err.response.data.msg}})
     }
@@ -51,7 +51,7 @@ export const insertSenario = (auth, senario, history) => async (dispatch) => {
     try {
         await postAPI(`senarii/new`, senario, auth.access_token)
 
-        history.push(`/account/senarii`)
+        history.push(`/account/scenarii`)
     } catch (err) {
         dispatch({ type: 'TOAST_ADD', payload: {errors: err.response.data.msg}})
     }
@@ -63,7 +63,7 @@ export const deleteSenario = (auth, senarioId, history) => async (dispatch) => {
     try {
         await deleteAPI(`senarii/${senarioId}`, auth.access_token)
 
-        history.push(`/account/senarii`)
+        history.push(`/account/scenarii`)
     } catch (err) {
         dispatch({ type: 'TOAST_ADD', payload: {errors: err.response.data.msg}})
     }
