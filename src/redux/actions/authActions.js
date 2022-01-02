@@ -40,7 +40,7 @@ export const refreshToken = () => async (dispatch) => {
         const res = await getAPI("refresh_token")
         dispatch({ type: 'AUTH', payload: res.data })
     } catch (error) {
-        dispatch({type: 'TOAST_ADD', payload: { errors: error.message }})
+        // dispatch({type: 'TOAST_ADD', payload: { errors: error.message }})
     }
 }
 

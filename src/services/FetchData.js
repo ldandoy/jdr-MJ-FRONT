@@ -16,15 +16,15 @@ ax.interceptors.request.use(async req => {
         const isExpired = dayjs.unix(token.exp).diff(dayjs()) < 1
         
         if (!isExpired) return req
+
+        response = await axios.get(`${process.env.REACT_APP_URL_API}/api/refresh_token`,{
+            withCredentials: true
+        })
+    
+        req.headers.Authorization = response.data.access_token
+    
+        store.dispatch({ type: 'AUTH', payload: response.data })
     }
-
-    response = await axios.get(`${process.env.REACT_APP_URL_API}/api/refresh_token`,{
-        withCredentials: true
-    })
-
-    req.headers.Authorization = response.data.access_token
-
-    store.dispatch({ type: 'AUTH', payload: response.data })
 
     return req
 })
