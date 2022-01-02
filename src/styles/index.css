@@ -40,3 +40,16 @@ html, body, #root {
     font-size: 1.4rem;
     line-height: 1.7rem;
 }
+
+.beta {
+    font-size: 1.2rem !important;
+    color: crimson;
+}
+
+.delete {
+    font-size: 1.2rem !important;
+    color: crimson;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+}

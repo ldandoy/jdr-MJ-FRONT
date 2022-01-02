@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { useParams, Link } from 'react-router-dom'
 
-import { getSenerio, addComment } from '../../redux/actions/senarriActions'
+import { getSenerio, addComment, delComment } from '../../redux/actions/senarriActions'
 
 const Start = () => {
     const { auth, senario } = useSelector((state) => state)
@@ -22,6 +22,12 @@ const Start = () => {
         event.preventDefault()
         dispatch(addComment(form, auth, scenarii_id) )
         setForm('')
+    }
+
+    const handlerOnClick = async (event, index) => {
+        event.preventDefault()
+
+        dispatch(delComment(auth, scenarii_id, index))
     }
 
     return (<>
@@ -47,7 +53,7 @@ const Start = () => {
                 </div>
             </section>
 
-            <section>
+            <section className='mtb-80'>
                 <div className="w-50 mx-auto mt-80">
                     <div className="row">
                         <div className='col'>
@@ -56,7 +62,7 @@ const Start = () => {
                     </div>
                     <div className="row">
                         <div className='col'>
-                            <form className="form-bordered" onSubmit={onSubmit}>
+                            { auth && <form className="form-bordered" onSubmit={onSubmit}>
                                 <div className="form-group">
                                     <label htmlFor="com" className="form-label txt-green txt-large">Commentaire</label>
                                     <textarea onChange={handlerOnChange} value={form} name="commenaire" id="com" rows={5} placeholder='Rédigez votre commentaire' className="form-textarea"></textarea>
@@ -64,13 +70,24 @@ const Start = () => {
                                 <div className="form-group">
                                     <button type='submit' className="btn btn-green w-100">Envoyer</button>
                                 </div>
-                            </form>
+                            </form> }
+
+                            {!auth && <div className='card mb-20'>
+                                <div className='card-body'>
+                                    <div className='mt-10 mb-20 txt-center txt-large'>Pour commencer vous devez être connecter.</div>
+                                    <div className="flex flex-jc-space-around">
+                                        <Link className="btn btn-green" to={`/register`}>Créer votre compte</Link>
+                                        <Link className="btn btn-beige" to={`/login`}>Vous connecter</Link>
+                                    </div>
+                                </div>
+                            </div>}
                         </div>
                     </div>
                     <div className="row">
                         <div className='col'>
-                            {senario.comments.map(comment => <div className='card mb-10' key={comment._id}>
-                                <div className='card-body'>
+                            {senario.comments.map((comment, index) => <div className='card mb-10' key={comment._id}>
+                                <div className='card-body relative'>
+                                    { auth && <div className='delete' onClick={(e) => handlerOnClick(e, index)}>X</div> }
                                     {comment.com}
                                 </div>
                             </div>)}

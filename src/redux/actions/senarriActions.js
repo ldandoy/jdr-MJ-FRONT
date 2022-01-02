@@ -20,10 +20,8 @@ export const getList = (auth) => async (dispatch) => {
 }
 
 export const getSenerio = (auth, senarii_id) => async (dispatch) => {
-    if(!auth.access_token || !auth.user) return;
-
     try {
-        const res = await getAPI(`senarii/${senarii_id}`, auth.access_token)
+        const res = await getAPI(`senarii/${senarii_id}`)
 
         dispatch({
             type: 'SET_SENARIO',
@@ -70,17 +68,32 @@ export const deleteSenario = (auth, senarioId, history) => async (dispatch) => {
     }
 }
 
-export const addComment = (form, auth, senarioId) => async(dispatch) => {
+export const addComment = (form, auth, scenarii_id) => async(dispatch) => {
     if(!auth.access_token || !auth.user) return;
 
     try {
         if (form !== '') {
-            dispatch({ type: 'ADD_COMMENT', payload: {com: form, owner: store.getState().auth.user}})
+            dispatch({ type: 'ADD_COMMENT', payload: {com: form, owner: auth.user}})
 
-            await postAPI(`senarii/${senarioId}/comment`, {com: form, owner: auth.user._id}, store.getState().auth.access_token)
+            await postAPI(`senarii/${scenarii_id}/comment`, {com: form, owner: auth.user._id}, auth.access_token)
         } else {
             dispatch({ type: 'TOAST_ADD', payload: {errors: 'Vous devez remplir le champs commentaire.'}})    
         }
+    } catch (err) {
+        dispatch({ type: 'TOAST_ADD', payload: {errors: err.response.data.msg}})
+    }
+}
+
+export const delComment = (auth, scenarii_id, index) => async (dispatch) => {
+    if(!auth.access_token || !auth.user) return;
+
+    try {
+        const res = await deleteAPI(`senarii/${scenarii_id}/comment/${index}`, store.getState().auth.access_token)
+        dispatch({ type: 'TOAST_ADD', payload: {success: res.data.msg}})
+        dispatch({
+            type: 'SET_SENARIO',
+            payload: res.data.scenario
+        })
     } catch (err) {
         dispatch({ type: 'TOAST_ADD', payload: {errors: err.response.data.msg}})
     }

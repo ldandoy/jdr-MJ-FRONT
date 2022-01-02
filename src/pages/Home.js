@@ -12,7 +12,8 @@ const Home = () => {
 
             <section className="mtb-80">
                 <div className="container">
-                    <h1 className="title">Maître du Jeu (MJ) Virtuel</h1>
+                    <h1 className="title">Maître du Jeu (MJ) Virtuel<div className="beta">Attention de site est en béta, il peut y avoir des bugs</div></h1>
+                    
                     <div className="pb-30">
                         Nous vous proposons de jouer au jeu de rôles seul, à deux ou plus, grâce à notre <span className="txt-bold txt-green">MJ Virtuel</span>. Il vous
                         suffira de créer votre fiche de personnage, puis de choisir un scénario et enfin de partir à l'aventure !
