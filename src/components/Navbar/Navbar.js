@@ -10,9 +10,14 @@ const Navbar =  () => {
     }
 
     return (
-        <nav className="navbar navbar-v navbar-bordered-b navbar-dark sticky-top bg-green">
+        <nav className="navbar navbar-v navbar-bordered-b navbar-dark navbar-fixed-top bg-green">
             <div className="navbar-title">
-                <a id="home" href="/" className="navbar-link">MJ Virtuel</a>
+                <div>
+                    <a className="navbar-link" href="/">
+                        <img src="/mjv-blanc-transparent.png" width={40} alt="logo" />
+                    </a>
+                    <a id="home" href="/" className="navbar-link">MJ Virtuel</a>
+                </div>
                 <i className="navbar-menu-icon">&#9776;</i>
             </div>
 
@@ -39,7 +44,7 @@ const Navbar =  () => {
                                         <Link to="/account/scenarii" className={ `navbar-link ${isActive('/account/scenarii')}` }>Vos scénarii</Link>
                                     </li>
                                     <li className="navbar-item">
-                                        <Link to="/logout" className="navbar-link txt-red-1000">Logout</Link>
+                                        <Link to="/logout" className="navbar-link txt-red-800">Logout</Link>
                                     </li>
                                 </ul>
                             </li>

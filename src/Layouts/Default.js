@@ -21,7 +21,7 @@ const Default = ({ children, isPrivate = false }) => {
         <header>
             <Navbar />
         </header>
-        <main className="mt-50">
+        <main className="mt-70">
             { !isLoading && <>
                 { children }
             </> }

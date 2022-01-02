@@ -1,4 +1,5 @@
 import { getAPI, postAPI, putAPI, deleteAPI } from '../../services/FetchData'
+import store from '../store'
 
 export const getList = (auth) => async (dispatch) => {
     try {
@@ -64,6 +65,22 @@ export const deleteSenario = (auth, senarioId, history) => async (dispatch) => {
         await deleteAPI(`senarii/${senarioId}`, auth.access_token)
 
         history.push(`/account/scenarii`)
+    } catch (err) {
+        dispatch({ type: 'TOAST_ADD', payload: {errors: err.response.data.msg}})
+    }
+}
+
+export const addComment = (form, auth, senarioId) => async(dispatch) => {
+    if(!auth.access_token || !auth.user) return;
+
+    try {
+        if (form !== '') {
+            dispatch({ type: 'ADD_COMMENT', payload: {com: form, owner: store.getState().auth.user}})
+
+            await postAPI(`senarii/${senarioId}/comment`, {com: form, owner: auth.user._id}, store.getState().auth.access_token)
+        } else {
+            dispatch({ type: 'TOAST_ADD', payload: {errors: 'Vous devez remplir le champs commentaire.'}})    
+        }
     } catch (err) {
         dispatch({ type: 'TOAST_ADD', payload: {errors: err.response.data.msg}})
     }
