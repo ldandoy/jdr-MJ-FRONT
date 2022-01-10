@@ -2,7 +2,8 @@ import { useHistory } from "react-router-dom"
 import { GoogleLogin } from 'react-google-login';
 import { useDispatch } from 'react-redux'
 
-import { googleLogin } from '../../redux/actions/authActions'
+import { postAPI } from '../../services/FetchData'
+import { loginPending, loginSuccess, loginFail } from '../../redux/slices/authSlice'
 
 const GoogleAuthButton =  () => {
     let history = useHistory()
@@ -10,7 +11,17 @@ const GoogleAuthButton =  () => {
 
     const onSuccessHandler = async (response) => {
         const id_token = response.tokenId
-        await dispatch(googleLogin(id_token))
+        // await dispatch(googleLogin(id_token))
+
+        dispatch(loginPending())
+        try {
+            const res = await postAPI('google_login', { id_token })
+            dispatch(loginSuccess(res.data))
+            history.push('/')
+        } catch (error) {
+            dispatch(loginFail(error.message))
+        }
+        
         history.push("/my-account")
     }
 

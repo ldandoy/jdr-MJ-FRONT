@@ -32,29 +32,39 @@ const Home = () => {
                         C'est facile, comme dans tout jeu de rôle, commencez par créer un personnage. Si vous ne savez pas comment faire, rendez-vous
                         sur: <a href='https://www.aidedd.org/' rel="noreferrer" className="txt-green" target="_blank">aidedd</a> où vous trouverez toute l'aide nécessaire.
                     </div>
-                    <div className="flex flex-jc-space-around">
-                        <div className="card bg-white">
-                            <div className="card-title txt-center">Etape 1</div>
-                            <div className="card-body">
-                                Créez votre personnage
+                    <div className="row row-tiers">
+                        <div className="col col-tiers">
+                            <div className="card bg-white">
+                                <div className="card-title txt-center">Etape 1</div>
+                                <div className="card-body">
+                                    Créez votre personnage ou utilisez un personnage préfait.
+                                    <div className="txt-center mt-20">
+                                        <a href="https://www.aidedd.org/download.php?file=eFeuillePersoDD5&ext=pdf" rel="noreferrer" className="btn btn-green" target="_blank">
+                                            Fiche PDF
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div className="card bg-white">
-                            <div className="card-title txt-center">Etape 2</div>
-                            <div className="card-body">
-                                Préparer vos dés
+                        <div className="col col-tiers">
+                            <div className="card bg-white">
+                                <div className="card-title txt-center">Etape 2</div>
+                                <div className="card-body">
+                                    Préparer vos dés, pour le moment seul le système D20 fonctionne.
+                                </div>
                             </div>
                         </div>
-                        <div className="card bg-white">
-                            <div className="card-title txt-center">Etape 3</div>
-                            <div className="card-body">
-                                Choissez un scénario
-                            </div>
-                        </div>
-                        <div className="card bg-white">
-                            <div className="card-title txt-center">Etape 4</div>
-                            <div className="card-body">
-                                Partir à l'aventure
+                        <div className="col col-tiers">
+                            <div className="card bg-white">
+                                <div className="card-title txt-center">Etape 3</div>
+                                <div className="card-body">
+                                    Choissez un scénario, vous pouvez tester les sénario en béta, n'hésitez pas à faire des retours à leur créateur.
+                                    <div className="txt-center mt-20">
+                                        <Link className="btn btn-green" to="/scenarii">
+                                            Commencer
+                                        </Link>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

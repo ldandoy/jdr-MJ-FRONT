@@ -1,3 +1,3 @@
-export const isAuth = async () => {
+/*export const isAuth = async () => {
     return localStorage.getItem('logged')
-}
+}*/

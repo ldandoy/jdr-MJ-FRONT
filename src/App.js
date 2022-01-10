@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Default from './Layouts/Default'
 import Auth from './Layouts/Auth'
+import Admin from "./Layouts/Admin"
 
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -23,19 +24,39 @@ import List from './pages/senarii/List'
 import Start from './pages/senarii/Start'
 import Section from './pages/senarii/Section'
 
+import HomeAdmin from './pages/admin/Home'
+import BugsIndexAdmin from './pages/admin/bugs/Index'
+
 import Toast from './components/Toast/Toast'
 
-import { refreshToken } from './redux/actions/authActions'
+import { setUserPending, setUserSuccess, setUserFail } from './redux/slices/authSlice'
+// import { refreshToken } from './redux/actions/authActions'
+import { getAPI } from './services/FetchData'
 
 function App() {
   const dispatch = useDispatch()
-  const { auth } = useSelector((state) => state)
+  const { isAuth } = useSelector((state) => state.auth)
+
+  const getUser = useCallback( async() => {
+    try {
+      dispatch(setUserPending())
+      const res = await getAPI("refresh_token")
+      dispatch(setUserSuccess(res.data))
+    } catch(err) {
+      dispatch(setUserFail("Vous n'êtes pas authentifié"))
+    }
+  }, [dispatch] )
 
   useEffect(() => {
-    if(!auth || !auth.access_token) {
-      dispatch(refreshToken())
+    if(!isAuth) {
+      console.log("Not loggin !")
+      getUser()
+      // dispatch(refreshToken())
+    } else {
+      console.log("loggin !")
     }
-  }, [dispatch, auth])
+  
+  }, [dispatch, getUser, isAuth])
 
   return (
     <Router forceRefresh={true}>
@@ -109,6 +130,17 @@ function App() {
           <Auth>
             <Active />
           </Auth>
+        </Route>
+
+        <Route exact path="/admin">
+          <Admin>
+            <HomeAdmin />
+          </Admin>
+        </Route>
+        <Route exact path="/admin/bugs">
+          <Admin>
+            <BugsIndexAdmin />
+          </Admin>
         </Route>
       </Switch>
       <Toast />

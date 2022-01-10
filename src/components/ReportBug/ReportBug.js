@@ -1,33 +1,36 @@
-import React, { useState } from 'react'
-import { createBug } from '../../redux/actions/bugActions'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { postAPI } from "../../services/FetchData"
+import { setSuccess } from "../../redux/slices/alertSlice"
 import Alert from '../Alert/Alert'
 
 const ReportBug = () => {
     const dispatch = useDispatch()
-    const { auth } = useSelector((state) => state)
-
-    const [bug, setBug] = useState({
-        email:      auth.user.account,
-        fullname:   auth.user.name,
-        report:     ""
-    })
+    const { user, token } = useSelector((state) => state.auth)
+    
+    const [report, setReport] = useState("")
 
     const handlerOnChange = (event) => {
-        const {name, value} = event.target
-        setBug({...bug, [name]:value})
+        const {value} = event.target
+        setReport(value)
     }
 
-    const handlerOnSubmit = (event) => {
+    const handlerOnSubmit = async (event) => {
         event.preventDefault()
 
-        dispatch(createBug(auth, bug))
+        try {
+            const res = await postAPI(`bug`, {
+                email: user.email,
+                name: user.name,
+                report
+            }, token)
 
-        setBug({
-            email:      auth.user.account,
-            fullname:   auth.user.name,
-            report:     ""
-        })
+            setReport("")
+            dispatch(setSuccess(res.data.msg))
+        } catch (error) {
+            
+        }
     }
     
     return (
@@ -37,19 +40,10 @@ const ReportBug = () => {
                 <div className="pb-30">
                     <form className='form-bordered w-50 mx-auto' onSubmit={handlerOnSubmit}>
                         <Alert />
-                        <div className="form-group">
-                            <label htmlFor="email" className="form-label">Votre Email</label>
-                            <input type="email" disabled={true} name="email" onChange={handlerOnChange} id="email" required={true} value={bug.email} className="form-input" />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="fullname" className="form-label">Votre prénom et votre nom</label>
-                            <input type="text" disabled={true} name="fullname" onChange={handlerOnChange} id="fullname" required={true} value={bug.fullname} className="form-input" />
-                        </div>
-
+                        
                         <div className="form-group">
                             <label htmlFor="report" className="form-label">Description du bug</label>
-                            <textarea id="report" name="report" onChange={handlerOnChange} rows={5} className="form-textarea" required={true} value={bug.report}></textarea>
+                            <textarea id="report" name="report" onChange={handlerOnChange} rows={5} className="form-textarea" required={true} value={report}></textarea>
                         </div>
 
                         <div className="form-group">

@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from 'react-router-dom'
 
 import {insertSenario} from '../../../redux/actions/senarriActions'
-import { refreshToken } from '../../../redux/actions/authActions'
 
 const New = () => {
     const { auth } = useSelector((state) => state)
@@ -96,7 +95,6 @@ const New = () => {
 
     const onSubmitHandler = (e) => {
         e.preventDefault()
-        dispatch(refreshToken())
         dispatch(insertSenario(auth, senario, history))
     }
 

@@ -3,16 +3,18 @@ import store from '../redux/store'
 import jwt_decode from 'jwt-decode'
 import dayjs from 'dayjs'
 
+import { setUserSuccess } from '../redux/slices/authSlice'
+
 const ax = axios.create({
     baseURL: process.env.REACT_APP_URL_API,
     withCredentials: true,
 })
 
 ax.interceptors.request.use(async req => {
-    const token = (typeof store.getState().auth.access_token === 'undefined') ? null : jwt_decode(store.getState().auth.access_token)
+    const token = (typeof store.getState().auth.token === 'undefined' || store.getState().auth.token === '') ? null : jwt_decode(store.getState().auth.token)
     let response
-
     if (token) {
+        console.log('rech the token');
         const isExpired = dayjs.unix(token.exp).diff(dayjs()) < 1
         
         if (!isExpired) return req
@@ -22,8 +24,11 @@ ax.interceptors.request.use(async req => {
         })
     
         req.headers.Authorization = response.data.access_token
+
+        console.log("Data: ", response.data)
     
-        store.dispatch({ type: 'AUTH', payload: response.data })
+        // store.dispatch({ type: 'AUTH', payload: response.data })
+        store.dispatch(setUserSuccess(response.data))
     }
 
     return req

@@ -1,15 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from "react-redux"
-import { useHistory } from 'react-router-dom'
 
 import Navbar from '../components/Navbar/Navbar'
 import ReportBug from '../components/ReportBug/ReportBug'
-import "../styles/Default.module.css"
 
 const Default = ({ children, isPrivate = false }) => {
     const { auth } = useSelector((state) => state)
     const [isLoading, setIsLoading] = useState(true)
-    let history = useHistory()
 
     useEffect(() => {
         if (isPrivate) {

@@ -1,6 +1,6 @@
 import { postAPI, getAPI } from '../../services/FetchData'
 
-export const login = (userLogin) => async (dispatch) => {
+/*export const login = (userLogin) => async (dispatch) => {
     try {
         const res = await postAPI("login", userLogin)
         
@@ -11,9 +11,9 @@ export const login = (userLogin) => async (dispatch) => {
     } catch (error) {
         dispatch({ type: 'ALERT', payload: { errors: error.response.data.msg }})
     }
-}
+}*/
 
-export const register = (userRegister) => async (dispatch) => {
+/*export const register = (userRegister) => async (dispatch) => {
     try {
         const res = await postAPI("register", userRegister)
         
@@ -33,16 +33,16 @@ export const register = (userRegister) => async (dispatch) => {
     } catch (error) {
         dispatch({type: 'TOAST_ADD', payload: { errors: error.response.data.msg }})
     }
-}
+}*/
 
-export const refreshToken = () => async (dispatch) => {
+/*export const refreshToken = () => async (dispatch) => {
     try {
         const res = await getAPI("refresh_token")
         dispatch({ type: 'AUTH', payload: res.data })
     } catch (error) {
         // dispatch({type: 'TOAST_ADD', payload: { errors: error.message }})
     }
-}
+}*/
 
 export const logout = () => async (dispatch) => {
     try {
@@ -53,7 +53,7 @@ export const logout = () => async (dispatch) => {
     }
 }
 
-export const googleLogin = (id_token) => async (dispatch) => {
+/*export const googleLogin = (id_token) => async (dispatch) => {
     try {
         const res = await postAPI('google_login', { id_token })
 
@@ -63,7 +63,7 @@ export const googleLogin = (id_token) => async (dispatch) => {
     } catch (error) {
         dispatch({type: 'TOAST_ADD', payload: { errors: error.response.data.msg } })
     }
-}
+}*/
 
 export const forgotPass = (account) => async (dispatch) => {
     try {

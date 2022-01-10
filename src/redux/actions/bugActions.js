@@ -1,6 +1,6 @@
 import { postAPI } from '../../services/FetchData'
 
-export const createBug = (auth, bug) => async (dispatch) => {
+/*export const createBug = (auth, bug) => async (dispatch) => {
     if(!auth.access_token || !auth.user) return;
 
     try {
@@ -10,4 +10,4 @@ export const createBug = (auth, bug) => async (dispatch) => {
     } catch (err) {
         dispatch({ type: 'SET_ALERT', payload: {errors: err.response.data.msg}})
     }
-}
+}*/

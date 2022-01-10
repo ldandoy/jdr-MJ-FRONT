@@ -1,24 +1,39 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
-import { register } from '../../redux/actions/authActions'
+// import { register } from '../../redux/actions/authActions'
+import { postAPI } from '../../services/FetchData'
+import { registerPending, registerSuccess, registerFail } from '../../redux/slices/authSlice'
 
 const Register =  () => {
+    let history = useHistory()
     const initialState = { name: "", account: "", password: "", cf_password: "" }
     const [form, setForm] = useState(initialState)
     const {name, account, password, cf_password} = form
     const [typePass, setTypePass] = useState(false)
     const [typeCfPass, setTypeCfPass] = useState(false)
     const dispatch = useDispatch()
+    const { isLoading } = useSelector(state => state.auth)
 
     const onChangeInputHandler = (e) => {
         const {name, value} = e.target
         setForm({...form, [name]: value})
     }
 
-    const onSubmitHandler = (e) => {
+    const onSubmitHandler = async (e) => {
         e.preventDefault()
-        dispatch(register(form))
+        // dispatch(register(form))
+
+        dispatch(registerPending())
+
+        try {
+            const res = await postAPI("register", form)
+            dispatch(registerSuccess(res.data))
+            history.push('/')
+        } catch (error) {
+            dispatch(registerFail(error.message))
+        }
     }
 
     return (
@@ -53,7 +68,7 @@ const Register =  () => {
                 <button className="btn bg-green txt-white-100 w-100 p-20"
                 disabled={(name && account && password) ? false : true}
                 >
-                    Enregistrez
+                    {!isLoading ? "Enregistrez" : "Chargement..." }
                 </button>
             </div>
         </form>

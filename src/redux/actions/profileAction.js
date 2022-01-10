@@ -3,7 +3,7 @@ import { patchAPI } from '../../services/FetchData'
 import { checkPassword } from '../../utils/Valid'
 
 
-export const updateUser = (avatar, name, auth) => async (dispatch) => {
+/*export const updateUser = (avatar, name, auth) => async (dispatch) => {
   if(!auth.access_token || !auth.user) return;
 
   let url = '';
@@ -42,7 +42,7 @@ export const updateUser = (avatar, name, auth) => async (dispatch) => {
   } catch (err) {
     dispatch({ type: 'TOAST_ADD', payload: {errors: err.response.data.msg}})
   }
-}
+}*/
 
 export const resetPassword = (password, cf_password, token) => async (dispatch) => {
   const msg = checkPassword(password, cf_password)

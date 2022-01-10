@@ -1,23 +1,37 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
-import { login } from '../../redux/actions/authActions'
+// import { login } from '../../redux/actions/authActions'
+import { postAPI } from '../../services/FetchData'
+import { loginPending, loginSuccess, loginFail } from '../../redux/slices/authSlice'
 
 const LoginPass =  () => {
+    let history = useHistory()
     const initialState = { account: "", password: ""}
     const [form, setForm] = useState(initialState)
     const {account, password} = form
     const [typePass, setTypePass] = useState(false)
     const dispatch = useDispatch()
+    const { isLoading } = useSelector(state => state.auth)
 
     const onChangeInputHandler = (e) => {
         const {name, value} = e.target
         setForm({...form, [name]: value})
     }
 
-    const onSubmitHandler = (e) => {
+    const onSubmitHandler = async (e) => {
         e.preventDefault()
-        dispatch(login(form))
+        // dispatch(login(form))
+        dispatch(loginPending())
+
+        try {
+            const res = await postAPI("login", form)
+            dispatch(loginSuccess(res.data))
+            history.push('/')
+        } catch (error) {
+            dispatch(loginFail(error.message))
+        }
     }
 
     return (
@@ -39,7 +53,7 @@ const LoginPass =  () => {
                 <button className="btn bg-green txt-white-100 w-100 p-20"
                 disabled={(account && password) ? false : true}
                 >
-                    Connexion
+                    {!isLoading ? "Connexion" : "Chargement..." }
                 </button>
             </div>
         </form>

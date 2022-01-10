@@ -1,9 +1,13 @@
 import { useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux"
 
-import { updateUser, resetPassword } from '../../redux/actions/profileAction'
+import { resetPassword } from '../../redux/actions/profileAction'
 import { deleteSenario } from '../../redux/actions/senarriActions'
+
+import { setUserSuccess } from '../../redux/slices/authSlice'
+import { checkImage, imageUpload } from '../../services/ImageUpload'
+import { patchAPI } from '../../services/FetchData'
 
 const Show = () => {
     const initState = {
@@ -14,17 +18,17 @@ const Show = () => {
         cf_password: ''
     }
 
-    const { auth } = useSelector((state) => state)
+    const { user, token, isAuth } = useSelector((state) => state.auth)
     const dispatch = useDispatch()
     let history = useHistory()
 
-    const [user, setUser] = useState(initState)
+    const [form, setForm] = useState(initState)
     const [typePass, setTypePass] = useState(false)
     const [typeCfPass, setTypeCfPass] = useState(false)
 
     const onChangeInputHandler = (e) => {
         const {name, value} = e.target
-        setUser({...user, [name]: value})
+        setForm({...form, [name]: value})
     }
 
     const onChangeFileHandler = (e) => {
@@ -33,47 +37,65 @@ const Show = () => {
 
         if (files) {
             const file = files[0]
-            setUser({...user, avatar: file})
+            setForm({...form, avatar: file})
         }
     }
 
-    const onSubmitHandle = (e) => {
+    const onSubmitHandle = async (e) => {
         e.preventDefault()
 
-        if (avatar || name) {
-            dispatch(updateUser(avatar, name, auth))
+        let url = ''
+        if (form.avatar || form.name) {
+            /*dispatch(updateUser(avatar, name, token))*/
+
+            if(form.avatar && form.avatar !== ""){
+                const check = checkImage(form.avatar)
+                if(check) return 
+          
+                // Return the new url
+                const photo = await imageUpload(form.avatar, token)
+                url = photo.data.url
+            }
+          
+            const res = await patchAPI('me', { 
+                avatar: url ? url : null, 
+                name: form.name ? form.name : "",
+                _id: user._id
+            }, token)
+
+            console.log("path", res.data);
+
+            dispatch(setUserSuccess({ user: res.data }))
         }
 
-        if (password && auth.access_token) {
-            dispatch(resetPassword(password, cf_password, auth.access_token))
+        if (form.password) {
+            // dispatch(resetPassword(form.password, form.cf_password, token))
         }
     }
 
     const deleteSenarii = (e, senarioId) => {
         e.preventDefault()
 
-        dispatch(deleteSenario(auth, senarioId, history))
+        dispatch(deleteSenario(token, senarioId, history))
     }
-
-    const { name, account, avatar, password, cf_password } = user
 
     return (<>
         <img src="ban.png" className="img-fluid" alt="banniere du site" />
         
         <section>
             <div className="container mt-100">
-                <h1 class="title">Mon compte</h1>
+                <h1 className="title">Mon compte</h1>
             </div>
         </section>
 
         <section>
             <div className="container">
-                { auth.user && <form onSubmit={onSubmitHandle}>
+                { isAuth && <form onSubmit={onSubmitHandle}>
                     <div className="row row-half">
                         <div className="col">
                             <div className="form-group">
                                 <div className="w-30">
-                                    <img className="img-thumbnails" src={avatar ? URL.createObjectURL(avatar): auth.user?.avatar} alt={account} />
+                                    <img className="img-thumbnails" src={form.avatar ? URL.createObjectURL(form.avatar): form.avatar} alt={form.account} />
                                 </div>
                                 <input type="file" accept="image/*" name="file" id="file_up" onChange={onChangeFileHandler} />
                             </div>
@@ -81,21 +103,21 @@ const Show = () => {
                         <div className="col">
                             <div className="form-group">
                                 <label htmlFor="" className="form-label">Identifiant</label>
-                                <input type="text" disabled={true} name="account" defaultValue={auth.user.account} className="form-input" onChange={onChangeInputHandler} placeholder="Email ou numéro de téléphone" />
+                                <input type="text" disabled={true} name="account" value={form.account} className="form-input" onChange={onChangeInputHandler} placeholder="Email ou numéro de téléphone" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="" className="form-label">Name</label>
-                                <input type="text" name="name" defaultValue={auth.user.name} className="form-input" onChange={onChangeInputHandler} placeholder="Nom" />
+                                <input type="text" name="name" value={form.name} className="form-input" onChange={onChangeInputHandler} placeholder="Nom" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="" className="form-label">Type de compte</label>
-                                <input type="text" disabled={true} name="type" defaultValue={auth.user.type} className="form-input" onChange={onChangeInputHandler} placeholder="Type de compte" />
+                                <input type="text" disabled={true} name="type" value={form.type} className="form-input" onChange={onChangeInputHandler} placeholder="Type de compte" />
                             </div>
-                            { auth.user.type === 'normal' && <>
+                            { user.type === 'normal' && <>
                                 <div className="form-group">
                                     <label htmlFor="" className="form-label">Mot de passe</label>
                                     <div className="form-input-group">
-                                        <input type={typePass ? "text" : "password" } name="password" value={password} className="form-input" onChange={onChangeInputHandler} placeholder="Mot de passe" />
+                                        <input type={typePass ? "text" : "password" } name="password" value={form.password} className="form-input" onChange={onChangeInputHandler} placeholder="Mot de passe" />
                                         <small onClick={() => setTypePass(!typePass)}>
                                             { typePass ? 'Hide' : "Show" }
                                         </small>
@@ -104,7 +126,7 @@ const Show = () => {
                                 <div className="form-group">
                                     <label htmlFor="" className="form-label">Confirmez votre mot de passe</label>
                                     <div className="form-input-group">
-                                        <input type={typeCfPass ? "text" : "password" } name="cf_password" value={cf_password} className="form-input" onChange={onChangeInputHandler} placeholder="Confirmez Mot de passe" />
+                                        <input type={typeCfPass ? "text" : "password" } name="cf_password" value={form.cf_password} className="form-input" onChange={onChangeInputHandler} placeholder="Confirmez Mot de passe" />
                                         <small onClick={() => setTypeCfPass(!typeCfPass)}>
                                             { typeCfPass ? 'Hide' : "Show" }
                                         </small>
@@ -124,7 +146,7 @@ const Show = () => {
 
         <section>
             <div className="container mt-100">
-                <h2 class="title">Vos scénarii</h2>
+                <h2 className="title">Vos scénarii</h2>
             </div>
         </section>
 
@@ -134,10 +156,10 @@ const Show = () => {
             </div>
         </section>
 
-        { auth.user ? <section>
+        { isAuth && user.senarii.length > 0 ? <section>
             <div className="container mt-30">
                 <div className="grid grid-cols-4 gap-8">
-                    { auth.user && auth.user.senarii.map((senario) =>
+                    { user.senarii.map((senario) =>
                         <div key={senario._id} className="card">
                             <div className="card-title">
                                 {(senario.status === "Brouillon" || senario.status === "") && <span className="badge bg-light">Brouillon</span>}

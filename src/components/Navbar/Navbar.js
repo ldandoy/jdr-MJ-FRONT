@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 
 const Navbar =  () => {
     const { pathname } = useLocation()
-    const { auth } = useSelector(state => state)
+    const { isAuth, user } = useSelector(state => state.auth)
 
     const isActive = (pn) => {
         if (pn === pathname) return 'active'
@@ -27,15 +27,15 @@ const Navbar =  () => {
                 </ul>
                 <ul className="navbar-menu-right">
                     {
-                        !auth.user && <>
+                        !isAuth && <>
                             <li className="navbar-item"><Link to="/login" className="navbar-link">Login</Link></li>
                             <li className="navbar-item"><Link to="/register" className="navbar-link">Register</Link></li>
                         </>
                     }
                     {
-                        auth.user && <>
+                        isAuth && <>
                             <li className="navbar-item dropdown">
-                                <Link className="navbar-link" to="#">{auth.user.name}</Link>
+                                <Link className="navbar-link" to="#">{user.name}</Link>
                                 <ul className="navbar-ss-menu bg-green">
                                     <li className="navbar-item">
                                         <Link to="/my-account" className={ `navbar-link ${isActive('/my-account')}` }>Mon compte</Link>
@@ -43,6 +43,13 @@ const Navbar =  () => {
                                     <li className="navbar-item">
                                         <Link to="/account/scenarii" className={ `navbar-link ${isActive('/account/scenarii')}` }>Vos scénarii</Link>
                                     </li>
+
+                                    {user.role === "admin" &&
+                                        <li className="navbar-item">
+                                            <Link to="/admin" className="navbar-link">Admin</Link>
+                                        </li>
+                                    }
+
                                     <li className="navbar-item">
                                         <Link to="/logout" className="navbar-link txt-red-800">Logout</Link>
                                     </li>
