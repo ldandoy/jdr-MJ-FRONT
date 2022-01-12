@@ -57,6 +57,13 @@ const authSlice = createSlice({
             state.isLoading = false
             state.error = payload
         },
+        logout: (state) => {
+            state.isLoading = false
+            state.isAuth = false
+            state.user = {}
+            state.token = ''
+            state.error = ''
+        }
     }
 })
 
@@ -71,7 +78,8 @@ export const {
     registerFail,
     setUserPending,
     setUserSuccess,
-    setUserFail
+    setUserFail,
+    logout
 } = actions
 
 export default reducer

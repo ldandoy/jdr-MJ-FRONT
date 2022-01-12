@@ -2,9 +2,6 @@ import { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux"
 
-import { resetPassword } from '../../redux/actions/profileAction'
-import { deleteSenario } from '../../redux/actions/senarriActions'
-
 import { setUserSuccess } from '../../redux/slices/authSlice'
 import { checkImage, imageUpload } from '../../services/ImageUpload'
 import { patchAPI } from '../../services/FetchData'
@@ -65,7 +62,7 @@ const Show = () => {
 
             console.log("path", res.data);
 
-            dispatch(setUserSuccess({ user: res.data }))
+            // dispatch(setUserSuccess({ user: res.data }))
         }
 
         if (form.password) {
@@ -76,7 +73,7 @@ const Show = () => {
     const deleteSenarii = (e, senarioId) => {
         e.preventDefault()
 
-        dispatch(deleteSenario(token, senarioId, history))
+        // dispatch(deleteSenario(token, senarioId, history))
     }
 
     return (<>

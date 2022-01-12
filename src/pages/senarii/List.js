@@ -9,9 +9,9 @@ const List = () => {
     const { auth } = useSelector((state) => state)
 
     const getVisibleSenarii = async () => {
-        let data = await getAPI(`senarii/visible`)
+        const res = await getAPI(`scenarios/visible`)
 
-        setSenarii(data.data)
+        setSenarii(res.data)
     }
 
     useEffect(() => {
@@ -22,7 +22,7 @@ const List = () => {
         <img src="ban.png" className="img-fluid" alt="banniere du site" />
         <section className="mtb-80">
             <div className="container">
-                <h1 className="title">Listes des sénarii</h1>
+                <h1 className="title">Listes des scénarii</h1>
             </div>
             <div className="container mt-30">
                 <div className="grid grid-cols-4 gap-8">

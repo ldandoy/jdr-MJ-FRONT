@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { login } from '../../redux/actions/authActions'
+// import { login } from '../../redux/actions/authActions'
 
 const LoginSms =  () => {
     const initialState = { account: "", password: ""}
@@ -17,7 +17,7 @@ const LoginSms =  () => {
 
     const onSubmitHandler = (e) => {
         e.preventDefault()
-        dispatch(login(form))
+        // dispatch(login(form))
     }
 
     return (

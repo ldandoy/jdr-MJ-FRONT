@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
-// import { login } from '../../redux/actions/authActions'
+import Alert from '../Alert/Alert'
 import { postAPI } from '../../services/FetchData'
 import { loginPending, loginSuccess, loginFail } from '../../redux/slices/authSlice'
+import { setError } from '../../redux/slices/alertSlice'
 
 const LoginPass =  () => {
     let history = useHistory()
@@ -22,7 +23,6 @@ const LoginPass =  () => {
 
     const onSubmitHandler = async (e) => {
         e.preventDefault()
-        // dispatch(login(form))
         dispatch(loginPending())
 
         try {
@@ -30,12 +30,14 @@ const LoginPass =  () => {
             dispatch(loginSuccess(res.data))
             history.push('/')
         } catch (error) {
-            dispatch(loginFail(error.message))
+            dispatch(loginFail(error.response.data.msg))
+            dispatch(setError(error.response.data.msg))
         }
     }
 
     return (
         <form className="form-no-bordered" onSubmit={onSubmitHandler}>
+            <Alert />
             <div className="form-group">
                 <label htmlFor="" className="form-label txt-green">Identifiant</label>
                 <input type="text" name="account" value={account} className="form-input" onChange={onChangeInputHandler} placeholder="Entrez votre email" />

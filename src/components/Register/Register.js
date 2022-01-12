@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+// import { useHistory } from 'react-router-dom'
 
-// import { register } from '../../redux/actions/authActions'
+import Alert from '../Alert/Alert'
 import { postAPI } from '../../services/FetchData'
 import { registerPending, registerSuccess, registerFail } from '../../redux/slices/authSlice'
+import { setError, setSuccess } from '../../redux/slices/alertSlice'
 
 const Register =  () => {
-    let history = useHistory()
+    // let history = useHistory()
     const initialState = { name: "", account: "", password: "", cf_password: "" }
     const [form, setForm] = useState(initialState)
     const {name, account, password, cf_password} = form
@@ -23,21 +24,23 @@ const Register =  () => {
 
     const onSubmitHandler = async (e) => {
         e.preventDefault()
-        // dispatch(register(form))
-
         dispatch(registerPending())
 
         try {
             const res = await postAPI("register", form)
+            console.log(res.data)
             dispatch(registerSuccess(res.data))
-            history.push('/')
+            dispatch(setSuccess("Un mail vous a été envoyer "))
+            // history.push('/login')
         } catch (error) {
-            dispatch(registerFail(error.message))
+            dispatch(registerFail(error.response.data.msg))
+            dispatch(setError(error.response.data.msg))
         }
     }
 
     return (
         <form className="form-no-bordered" onSubmit={onSubmitHandler}>
+            <Alert />
             <div className="form-group">
                 <label htmlFor="" className="form-label">Name</label>
                 <input type="text" name="name" value={name} className="form-input" onChange={onChangeInputHandler} placeholder="Nom" />

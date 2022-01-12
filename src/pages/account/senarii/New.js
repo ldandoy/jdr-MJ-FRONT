@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from 'react-router-dom'
 
-import {insertSenario} from '../../../redux/actions/senarriActions'
-
 const New = () => {
     const { auth } = useSelector((state) => state)
     const [ senario, setSenario ] = useState({
@@ -95,7 +93,7 @@ const New = () => {
 
     const onSubmitHandler = (e) => {
         e.preventDefault()
-        dispatch(insertSenario(auth, senario, history))
+        // dispatch(insertSenario(auth, senario, history))
     }
 
     return (<>

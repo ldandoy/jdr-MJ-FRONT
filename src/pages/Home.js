@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 import { Link } from 'react-router-dom'
 
-import ListUserScenarii from '../components/ListUserScenarii/ListUserScenarii'
+import ListScenarii from '../components/scenarii/ListScenarii'
 
 const Home = () => {
     const { auth } = useSelector((state) => state)
@@ -71,28 +71,26 @@ const Home = () => {
                 </div>
             </section>
 
-            <section className="ptb-80">
+            {!auth && <section className="ptb-80">
                 <div className="container">
-                    {!auth && <>
-                        <h1 className="title">Créer un scénario</h1>
-                        <div className="pb-30">
-                            Un scénario, c'est comme un livre dont vous êtes le héro. Vous créer l'histoire en petits morceaux et laissez le choix au joueur de prendre telle ou telle décision.
-                            Lui jouera au dé, pour savoir s'il a réussi où non l'action. C'est vous qui choissez le niveau de difficulté et ce qui se passe suivant le résultat.
-                        </div>
-                        <div className="pb-80">
-                            Vous décidez aussi des rencontres et des récompenses obtenues par les héros. Pour ça il vous suffit de créer votre compte ou de vous connecter.
-                        </div>
-                        <div className="flex flex-jc-space-around">
-                            <Link className="btn btn-green" to={`/register`}>Créer votre compte</Link>
-                            <Link className="btn btn-beige" to={`/login`}>Vous connecter</Link>
-                        </div>
-                    </>}
-
-                    {auth && <>
-                        <ListUserScenarii />
-                    </>}
+                    <h1 className="title">Créer un scénario</h1>
+                    <div className="pb-30">
+                        Un scénario, c'est comme un livre dont vous êtes le héro. Vous créer l'histoire en petits morceaux et laissez le choix au joueur de prendre telle ou telle décision.
+                        Lui jouera au dé, pour savoir s'il a réussi où non l'action. C'est vous qui choissez le niveau de difficulté et ce qui se passe suivant le résultat.
+                    </div>
+                    <div className="pb-80">
+                        Vous décidez aussi des rencontres et des récompenses obtenues par les héros. Pour ça il vous suffit de créer votre compte ou de vous connecter.
+                    </div>
+                    <div className="flex flex-jc-space-around">
+                        <Link className="btn btn-green" to={`/register`}>Créer votre compte</Link>
+                        <Link className="btn btn-beige" to={`/login`}>Vous connecter</Link>
+                    </div>
                 </div>
-            </section>
+            </section>}
+
+            {auth && <>
+                <ListScenarii />
+            </>}
         </div>
     )
 }

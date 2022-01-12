@@ -23,7 +23,7 @@ const Default = ({ children, isPrivate = false }) => {
         <header>
             <Navbar />
         </header>
-        <main className="mt-70">
+        <main className="mt-70 front">
             { !isLoading && <>
                 { children }
                 { auth && <ReportBug /> }

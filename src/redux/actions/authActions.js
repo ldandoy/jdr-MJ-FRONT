@@ -44,14 +44,14 @@ import { postAPI, getAPI } from '../../services/FetchData'
     }
 }*/
 
-export const logout = () => async (dispatch) => {
+/*export const logout = () => async (dispatch) => {
     try {
         localStorage.removeItem('logged')
         await getAPI('logout')
     } catch (error) {
         dispatch({ type: 'TOAST_ADD', payload: { errors: error.response.data.msg } })
     }
-}
+}*/
 
 /*export const googleLogin = (id_token) => async (dispatch) => {
     try {
@@ -65,7 +65,7 @@ export const logout = () => async (dispatch) => {
     }
 }*/
 
-export const forgotPass = (account) => async (dispatch) => {
+/*export const forgotPass = (account) => async (dispatch) => {
     try {
         const res = await postAPI('forgot_password', {account})
     
@@ -73,7 +73,7 @@ export const forgotPass = (account) => async (dispatch) => {
     } catch (error) {
         dispatch({type: 'ALERT', payload: { errors: error.response.data.msg } })
     }
-}
+}*/
 
 export const resetPass = (form, reset_token) => async (dispatch) => {
     try {

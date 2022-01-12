@@ -27,7 +27,6 @@ ax.interceptors.request.use(async req => {
 
         console.log("Data: ", response.data)
     
-        // store.dispatch({ type: 'AUTH', payload: response.data })
         store.dispatch(setUserSuccess(response.data))
     }
 

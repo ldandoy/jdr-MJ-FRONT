@@ -11,8 +11,8 @@ const RegisterPage = () => {
     const { auth } = useSelector(state => state)
 
     useEffect(() => {
-        if (auth.access_token) history.push('/')
-    }, [auth.access_token, history])
+        if (auth.token) history.push('/')
+    }, [auth.token, history])
     
     return (<div className="card w-50 mx-auto bg-white">
         <div className="card-title txt-center txt-green">

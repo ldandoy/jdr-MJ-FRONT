@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { forgotPass } from '../../redux/actions/authActions'
 import Alert from '../Alert/Alert'
+import { postAPI } from '../../services/FetchData'
+import { setSuccess, setError } from '../../redux/slices/alertSlice'
 
 const ForgotPass =  () => {
     const [account, setAccount] = useState('')
@@ -13,9 +14,15 @@ const ForgotPass =  () => {
         setAccount(e.target.value)
     }
 
-    const onSubmitHandler = (e) => {
+    const onSubmitHandler = async (e) => {
         e.preventDefault()
-        dispatch(forgotPass(account))
+
+        try {
+            const res = await postAPI('forgot_password', {account})
+            dispatch(setSuccess(res.data.msg))
+        } catch (error) {
+            dispatch(setError(error.response.data.msg))
+        }
     }
 
     return (
@@ -23,10 +30,10 @@ const ForgotPass =  () => {
             <Alert />
             <div className="form-group">
                 <label htmlFor="" className="form-label">Identifiant</label>
-                <input type="text" name="account" value={account} className="form-input" onChange={onChangeInputHandler} placeholder="Email ou numéro de téléphone" />
+                <input type="text" name="account" value={account} className="form-input" onChange={onChangeInputHandler} placeholder="Renseigner l'email du compte à réinitialiser" />
             </div>
             <div className="form-group">
-                <button className="btn bg-purple-600 txt-white-100 hover:bg-purple-900 w-100 p-20"
+                <button className="btn bg-green txt-white-100 w-100 p-20"
                 disabled={account ? false : true}
                 >
                     Envoyer

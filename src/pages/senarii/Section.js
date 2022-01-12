@@ -1,31 +1,38 @@
-import { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from "react-redux"
+import { useEffect, useState, useCallback } from 'react'
+import { useSelector } from "react-redux"
 import { useHistory, useParams, Link } from 'react-router-dom'
 
-import { getSenerio } from '../../redux/actions/senarriActions'
+import { getAPI } from '../../services/FetchData'
+
 
 const Section = () => {
     const history = useHistory()
-    const { auth, senario } = useSelector((state) => state)
-    const dispatch = useDispatch()
+    const { auth } = useSelector((state) => state)
     const { scenarii_id, sections_index } = useParams()
     const [section, setSection] = useState(null)
     const [action, setAction] = useState(null)
     const [done, setDone] = useState(null)
 
-    useEffect(() => {
-        dispatch(getSenerio(auth, scenarii_id))
-    }, [dispatch, auth, scenarii_id])
+    const [scenario, setScenario] = useState(null)
+
+    const getSenerio = useCallback(async (scenarii_id) => {
+        const res = await getAPI(`scenarios/${scenarii_id}`, auth.token)
+        setScenario(res.data)
+    }, [auth.token])
 
     useEffect(() => {
-        if (!senario) return
+        getSenerio(scenarii_id, auth.token)
+    }, [scenarii_id, getSenerio, auth.token])
 
-        setSection(senario.sections[sections_index])
+    useEffect(() => {
+        if (!scenario) return
+
+        setSection(scenario.sections[sections_index])
 
         if (typeof section === 'undefined') {
-            history.push(`/senarii/${senario._id}`)
+            history.push(`/scenarii/${scenario._id}`)
         }
-    }, [section, senario, sections_index, history])
+    }, [section, scenario, sections_index, history])
 
     const undoAction = (e) => {
         e.preventDefault()

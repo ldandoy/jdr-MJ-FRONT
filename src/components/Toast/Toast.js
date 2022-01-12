@@ -20,6 +20,7 @@ const Toast = () => {
                     </div>
                 ))
             }
+
             { toast.errors && typeof toast.errors === 'string' &&
                 <div className="toast toast-error">
                     <div className="toast-body">
@@ -27,6 +28,7 @@ const Toast = () => {
                     </div>
                 </div>
             }
+            
             { toast.success &&
                 <div className="toast toast-success">
                     <div className="toast-body">

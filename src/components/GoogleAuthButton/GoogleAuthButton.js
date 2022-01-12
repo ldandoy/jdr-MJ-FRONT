@@ -11,7 +11,6 @@ const GoogleAuthButton =  () => {
 
     const onSuccessHandler = async (response) => {
         const id_token = response.tokenId
-        // await dispatch(googleLogin(id_token))
 
         dispatch(loginPending())
         try {

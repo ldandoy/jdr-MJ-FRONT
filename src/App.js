@@ -30,7 +30,6 @@ import BugsIndexAdmin from './pages/admin/bugs/Index'
 import Toast from './components/Toast/Toast'
 
 import { setUserPending, setUserSuccess, setUserFail } from './redux/slices/authSlice'
-// import { refreshToken } from './redux/actions/authActions'
 import { getAPI } from './services/FetchData'
 
 function App() {
@@ -49,11 +48,7 @@ function App() {
 
   useEffect(() => {
     if(!isAuth) {
-      console.log("Not loggin !")
       getUser()
-      // dispatch(refreshToken())
-    } else {
-      console.log("loggin !")
     }
   
   }, [dispatch, getUser, isAuth])

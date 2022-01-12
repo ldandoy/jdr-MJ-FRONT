@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { Link, useHistory } from 'react-router-dom'
 
-import {deleteSenario} from '../../../redux/actions/senarriActions'
-
 const List = () => {
     let history = useHistory()
     const dispatch = useDispatch()
@@ -19,7 +17,7 @@ const List = () => {
     const deleteSenarii = (e, senarioId) => {
         e.preventDefault()
 
-        dispatch(deleteSenario(auth, senarioId, history))
+        // dispatch(deleteSenario(auth, senarioId, history))
     }
 
     return (<>

@@ -1,18 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { Link, useHistory } from 'react-router-dom'
 
-const ListUserScenarii = () => {
+import { getAPI } from '../../services/FetchData'
+
+const ListScenarii = () => {
     let history = useHistory()
     const dispatch = useDispatch()
     const { auth } = useSelector((state) => state)
     const [senarii, setSenarii] = useState([])
 
-    useEffect(() => {
-        if (!auth || !auth.user || !auth.user.senarii) return
+    const getScenarri = useCallback(async () => {
+        if (!auth || !auth.user) return
         
-        setSenarii(auth.user.senarii)
+        const res = await getAPI('/scenarios/visible', auth.token)
+        setSenarii(res.data)
     }, [auth])
+
+    useEffect(() => {
+        getScenarri()
+    }, [getScenarri])
 
     const deleteSenarii = (e, senarioId) => {
         e.preventDefault()
@@ -23,7 +30,7 @@ const ListUserScenarii = () => {
     return (<>
         <section>
             <div className="container">
-                <h1 className="title">Vos Senarii</h1>
+                <h1 className="title">Vos Scenarii</h1>
             </div>
         </section>
         <section>
@@ -56,4 +63,4 @@ const ListUserScenarii = () => {
     </>)
 }
 
-export default ListUserScenarii
+export default ListScenarii
